@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ASTRID Channel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  
+<div class="container">
+  <h1>Power - dBm - Power</h1>
+<p>Enter the known value in the input boxes and click the calculate button next to the value you filled in to calculate the others:</p>
+  <form action="/action_page.php">
+
+    <div class="input-group">
+    <span class="input-group-addon">Power [Watt]</span>
+      <input type="text" id="A" class="form-control" placeholder="Value" value="1" name="search">
+      <div class="input-group-btn">
+        <button class="btn btn-default" onclick="SolveFor('A')" type="button"> <span class="glyphicon glyphicon-circle-arrow-left"></span> Calculate</button>
+      </div>
+    </div>
+     <div class="input-group">
+    <span class="input-group-addon">Power [dBm]</span>
+      <input type="text" id="B" class="form-control" placeholder="Value" name="search">
+      <div class="input-group-btn">
+        <button class="btn btn-default" onclick="SolveFor('B')" type="button"> <span class="glyphicon glyphicon-circle-arrow-left"></span> Calculate</button>
+      </div>
+
+    
+    
+  </form>
+</div>
+<script>
+function parseFloatFromStringById(id){
+let text = document.getElementById(id).value;
+
+let value = parseFloat(text);
+
+let position = text.search("k");
+if(text.search("k") > 0){
+value = value * 1e3;
+}else if(text.search("M") > 0){
+value = value * 1e6;
+}
+else if(text.search("G") > 0){
+value = value * 1e9;
+}
+else if(text.search("g") > 0){
+value = value * 1e9;
+}
+else if(text.search("n") > 0){
+value = value * 1e-9;
+}else if(text.search("m") > 0){
+value = value * 1e-3;
+}
+return value;
+}
+
+function SolveForAOld() {
+  document.getElementById("demo").innerHTML = parseFloatFromStringById("A");
+
+}
+
+function SolveFor(x) {
+
+  var A = parseFloatFromStringById("A");
+  var B = parseFloatFromStringById("B");
+  
+  var result;
+  
+  switch(x) {
+  case "A":
+  B = 10 * Math.log10(A)+30;
+  
+ 
+    break;
+  case "B":
+  A = Math.pow(10,((B-30)/10));
+
+    break;    
+  default:
+    // code block
+} 
+  
+  document.getElementById("A").value = A;
+  document.getElementById("B").value = B;
+  
+}
+</script>
+</body>
+</html>
